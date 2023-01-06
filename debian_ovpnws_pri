@@ -212,10 +212,9 @@ sed -i "s|PORT_TCP|$PORT_TCP|g" /etc/openvpn/server2.conf
 #!/bin/bash
 username=`head -n1 $1 | tail -1`   
 password=`head -n2 $1 | tail -1`
-cat="CGY"
 
 query="username=$username&password=$password";
-validation="$(wget --no-check-certificate 'SERVER_API/auth_$cat.php?$query')";
+validation="$(wget --no-check-certificate 'SERVER_API/auth_CGY.php?$query')";
 if [ "$validation" == '1' ];  then		
 	exit 0
 else	

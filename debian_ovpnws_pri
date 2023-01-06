@@ -4,6 +4,7 @@
 PORT_TCP='1194';
 PORT_UDP='53';
 API='http://hxhvpn.net/mediatek';
+CATEGORY='premium';
 
 timedatectl set-timezone Asia/Manila
 install_require () {
@@ -212,9 +213,10 @@ sed -i "s|PORT_TCP|$PORT_TCP|g" /etc/openvpn/server2.conf
 username=`head -n1 $1 | tail -1`   
 password=`head -n2 $1 | tail -1`
 server_api="SERVER_API"
+cat="CGY"
 
 query="username=$username&password=$password";
-validation="$(wget --no-check-certificate --quiet \--method GET \--timeout=0 \--header '' \'$server_api/authenticate.php?$query')";
+validation="$(wget --no-check-certificate --quiet \--method GET \--timeout=0 \--header '' \'$server_api/auth_$cat.php?$query')";
 if [ "$validation" == '1' ];  then		
 	exit 0
 else	
@@ -222,6 +224,7 @@ else
 fi
 EOM
 sed -i "s|SERVER_API|$API|g" /etc/openvpn/login/auth_vpn
+sed -i "s|CGY|$CATEGORY|g" /etc/openvpn/login/auth_vpn
 
 #client-connect file
 cat <<'LENZ05' >/etc/openvpn/login/connect.sh

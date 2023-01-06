@@ -246,6 +246,7 @@ sed -i "s|SERVER_IP|$server_ip|g" /etc/openvpn/login/connect.sh
 sed -i "s|SERVER_API|$API|g" /etc/openvpn/login/connect.sh
 
 #TCP client-disconnect file
+cat <<'LENZ06' >/etc/openvpn/login/disconnect.sh
 #!/bin/bash
 server_api="SERVER_API"
 

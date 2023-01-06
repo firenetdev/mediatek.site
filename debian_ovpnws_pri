@@ -4,7 +4,7 @@
 PORT_TCP='1194';
 PORT_UDP='53';
 API='http://hxhvpn.net/mediatek';
-CATEGORY='premium';
+CATEGORY='private';
 
 timedatectl set-timezone Asia/Manila
 install_require () {

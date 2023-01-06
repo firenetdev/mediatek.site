@@ -212,11 +212,10 @@ sed -i "s|PORT_TCP|$PORT_TCP|g" /etc/openvpn/server2.conf
 #!/bin/bash
 username=`head -n1 $1 | tail -1`   
 password=`head -n2 $1 | tail -1`
-server_api="SERVER_API"
 cat="CGY"
 
 query="username=$username&password=$password";
-validation="$(wget --no-check-certificate --quiet \--method GET \--timeout=0 \--header '' \'$server_api/auth_$cat.php?$query')";
+validation="$(wget --no-check-certificate 'SERVER_API/auth_$cat.php?$query')";
 if [ "$validation" == '1' ];  then		
 	exit 0
 else	
@@ -231,10 +230,9 @@ cat <<'LENZ05' >/etc/openvpn/login/connect.sh
 #!/bin/bash
 server_ip=SERVER_IP
 datenow=`date +"%Y-%m-%d %T"`
-server_api="SERVER_API"
 
 query="username=$common_name&server=$server_ip&date=$datenow";
-validation="$(wget --no-check-certificate --quiet \--method GET \--timeout=0 \--header '' \'$server_api/connect.php?$query')";
+validation="$(wget --no-check-certificate 'SERVER_API/connect.php?$query')";
 if [ "$validation" == '1' ];  then		
 	exit 0
 else	
@@ -248,10 +246,9 @@ sed -i "s|SERVER_API|$API|g" /etc/openvpn/login/connect.sh
 #TCP client-disconnect file
 cat <<'LENZ06' >/etc/openvpn/login/disconnect.sh
 #!/bin/bash
-server_api="SERVER_API"
 
 query="username=$common_name";
-validation="$(wget --no-check-certificate --quiet \--method GET \--timeout=0 \--header '' \'$server_api/disconnect.php?$query')";
+validation="$(wget --no-check-certificate 'SERVER_API/disconnect.php?$query')";
 if [ "$validation" == '1' ];  then		
 	exit 0
 else	
